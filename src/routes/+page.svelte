@@ -1,6 +1,6 @@
 <script>
     import { fade } from 'svelte/transition';
-	import NotificationService from '$lib/NotificationService.svelte';
+	import NotificationService from '$lib/components/NotificationService.svelte';
     import { DEFAULT_VARIANTS, DEFAULT_LOCATIONS } from "$lib/configurations.js";
 
     let notficationService;

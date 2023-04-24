@@ -1,6 +1,6 @@
 <script>
     import Icon from '@iconify/svelte';
-    import {DEFAULT_VARIANTS} from "./configurations.js";
+    import { DEFAULT_VARIANTS } from "../configurations.js";
 
     export let title = undefined;
     export let message = undefined;

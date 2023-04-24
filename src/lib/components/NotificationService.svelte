@@ -2,7 +2,7 @@
     import { fade } from 'svelte/transition';
     import { flip } from 'svelte/animate';
 	import Notification from './Notification.svelte';
-    import { DEFAULT_LOCATIONS } from "./configurations.js";
+    import { DEFAULT_LOCATIONS } from "../configurations.js";
     
     export let location = undefined;
     export let locations = undefined;
