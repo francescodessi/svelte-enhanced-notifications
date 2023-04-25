@@ -53,7 +53,7 @@
                 bind:message={notification.message}
                 bind:variant={notification.variant}
                 bind:customVariants={notification.customVariants}
-                bind:customIcon={notification.customIcon}
+                bind:customIconSvg={notification.customIconSvg}
                 bind:customPrimaryColor={notification.customPrimaryColor}
                 bind:customPrimaryColorVariant={notification.customPrimaryColorVariant}
                 bind:customFontColor={notification.customFontColor}

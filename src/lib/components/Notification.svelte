@@ -1,5 +1,5 @@
 <script>
-    import Icon from '@iconify/svelte';
+    import Icon from "./Icon.svelte";
     import { DEFAULT_VARIANTS } from "../configurations.js";
 
     export let title = undefined;
@@ -7,7 +7,7 @@
     
     export let variant = undefined;
     export let variants = undefined;
-    export let customIcon = undefined;
+    export let customIconSvg = undefined;
     export let customPrimaryColor = undefined;
     export let customPrimaryColorVariant = undefined;
     export let customFontColor = undefined;
@@ -18,14 +18,13 @@
     export let countdownDuration = 3000;
     export let countdownStart = false;
 
-    let icon = undefined;
     let primaryColor = undefined;
     let primaryColorVariant = undefined;
     let fontColor = undefined;
 
     $: {
         const ALL_VARIANTS = {...DEFAULT_VARIANTS, ...variants};
-        ({primaryColor, primaryColorVariant, fontColor, icon} = ALL_VARIANTS[ALL_VARIANTS.hasOwnProperty(variant) ? variant : "default"]);
+        ({primaryColor, primaryColorVariant, fontColor} = ALL_VARIANTS[ALL_VARIANTS.hasOwnProperty(variant) ? variant : "default"]);
        
         if(customPrimaryColor) {
             primaryColor = customPrimaryColor;
@@ -38,10 +37,6 @@
         if(customFontColor) {
             fontColor = customFontColor;
         }
-
-        if(customIcon) {
-            icon = customIcon;
-        }
     }
 </script>
 
@@ -49,9 +44,7 @@
     <div class="notification">
         <div>
             <slot name="icon">
-                {#if icon}
-                    <Icon {icon} color={primaryColorVariant} width="32" height="32" inline={true}/>
-                {/if}
+                <Icon name={variant} color={primaryColorVariant} customIconSvg={customIconSvg} width="32" height="32"/>
             </slot>
         </div>
         <div class="content">
@@ -67,7 +60,7 @@
         <div class="close">
             {#if showCloseButton}
                 <button title="Close" on:click>
-                    <Icon icon="material-symbols:close" color={primaryColorVariant} />
+                    <Icon name="close" color={primaryColorVariant} />
                 </button>
             {/if}
         </div>

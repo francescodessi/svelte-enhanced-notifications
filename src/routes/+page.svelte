@@ -15,7 +15,7 @@
     let countdownDuration = 3000;
 
     let customStyle = false;
-    let customIcon = "line-md:coffee-loop";
+    let customIconSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="48" stroke-dashoffset="48" d="M17 9v9a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V9z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="48;0"/></path><path stroke-dasharray="14" stroke-dashoffset="14" d="M17 14H20C20.55 14 21 13.55 21 13V10C21 9.45 20.55 9 20 9H17"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="14;28"/></path></g><mask id="lineMdCoffeeLoop0"><path fill="none" stroke="#fff" stroke-width="2" d="M8 0c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4M12 0c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4M16 0c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4"><animateMotion calcMode="linear" dur="3s" path="M0 0v-8" repeatCount="indefinite"/></path></mask><rect width="24" height="0" y="7" fill="currentColor" mask="url(#lineMdCoffeeLoop0)"><animate fill="freeze" attributeName="y" begin="0.8s" dur="0.6s" values="7;2"/><animate fill="freeze" attributeName="height" begin="0.8s" dur="0.6s" values="0;5"/></rect></svg>';
     let customPrimaryColor = "#1095c1";
     let customPrimaryColorVariant = "#07495f";
     let customFontColor = "#f0f0f0";    
@@ -29,7 +29,7 @@
             autoDismissible: autoDismissible,
             showCountdown: showCountdown,
             countdownDuration: countdownDuration,
-            customIcon: customStyle ? customIcon : undefined,
+            customIconSvg: customStyle ? customIconSvg : undefined,
             customPrimaryColor: customStyle ? customPrimaryColor : undefined,
             customPrimaryColorVariant: customStyle ? customPrimaryColorVariant : undefined,
             customFontColor: customStyle ? customFontColor : undefined,
@@ -131,9 +131,9 @@
                         <input type="color" id="customFontColor" name="customFontColor" bind:value={customFontColor} disabled={!customStyle}/>
                     </label>
                 </div>
-                <label for="customIcon">
-                    Icon
-                    <input type="text" id="customIcon" name="customIcon" bind:value={customIcon} disabled={!customStyle}/>
+                <label for="customIconSvg">
+                    Icon svg
+                    <input type="text" id="customIconSvg" name="customIconSvg" bind:value={customIconSvg} disabled={!customStyle}/>
                     <small>
                         <a href="https://icon-sets.iconify.design/" target="_blank">Pick an icon from iconify.design</a>
                     </small>
