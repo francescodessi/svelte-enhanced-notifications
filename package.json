@@ -1,5 +1,5 @@
 {
-	"name": "svelte-enhanced-notifications",
+	"name": "@dflare/svelte-enhanced-notifications",
 	"version": "0.0.1",
 	"description": "Notifications for Svelte",
 	"keywords": [
