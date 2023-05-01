@@ -6,7 +6,9 @@
 		"notification",
 		"notifications",
 		"Svelte",
-		"SvelteKit"
+		"SvelteKit",
+		"svelte-kit",
+		"svelte-component"
 	],
 	"homepage": "https://github.com/francescodessi/svelte-enhanced-notifications",
 	"license": "MIT",
