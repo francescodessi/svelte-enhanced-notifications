@@ -182,6 +182,7 @@ It provides the following properties:
 <button on:click={showNotification}>Show Notification</button>
 ```
 **Result**
+
 ![notification-success-screenshot]
 
 <p align="right">(<a href="#svelte-enhanced-notifications">back to top</a>)</p>
