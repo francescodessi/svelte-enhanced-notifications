@@ -214,7 +214,9 @@ It provides the following properties:
 ```
 
 **Result**
+
 ![notification-warning-screenshot]
+
 The dark line at the bottom of the notification is the countdown timer.
 
 <p align="right">(<a href="#svelte-enhanced-notifications">back to top</a>)</p>
@@ -253,7 +255,9 @@ The dark line at the bottom of the notification is the countdown timer.
 <button on:click={showNotification}>Show Notification</button>
 ```
 **Result**
+
 ![notification-custom-success-screenshot]
+
 ![notification-custom-screenshot]
 
 <p align="right">(<a href="#svelte-enhanced-notifications">back to top</a>)</p>
@@ -283,6 +287,7 @@ In this example, three NotificationService components are used with different po
 ```
 
 **Result**
+
 ![notifications-locations-screenshot]
 
 <p align="right">(<a href="#svelte-enhanced-notifications">back to top</a>)</p>
