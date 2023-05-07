@@ -296,7 +296,7 @@ In this example, three NotificationService components are used with different po
 ## License
 Distributed under the MIT License. See [LICENSE.md][license-url] for more information.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#svelte-enhanced-notifications">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [license-shield]: https://img.shields.io/github/license/francescodessi/svelte-enhanced-notifications?&style=for-the-badge
