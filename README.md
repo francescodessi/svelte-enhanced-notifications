@@ -303,10 +303,10 @@ Distributed under the MIT License. See [LICENSE.md][license-url] for more inform
 [Svelte-url]: https://svelte.dev/
 [svelteKit-shield]: https://img.shields.io/badge/SvelteKit-4A4A55?style=for-the-badge&logo=svelte
 [SvelteKit-url]: https://kit.svelte.dev/
-[notifications-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/tree/main/static/notifications-screenshot.png
-[notification-success-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/tree/main/static/notification-success-screenshot.png
-[notification-warning-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/tree/main/static/notification-warning-screenshot.png
-[notification-custom-success-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/tree/main/static/notification-custom-success-screenshot.png
-[notification-custom-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/tree/main/static/notification-custom-screenshot.png
-[notifications-locations-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/tree/main/static/notifications-locations-screenshot.png
+[notifications-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notifications-screenshot.png
+[notification-success-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notification-success-screenshot.png
+[notification-warning-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notification-warning-screenshot.png
+[notification-custom-success-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notification-custom-success-screenshot.png
+[notification-custom-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notification-custom-screenshot.png
+[notifications-locations-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notifications-locations-screenshot.png
 
