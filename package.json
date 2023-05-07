@@ -1,6 +1,6 @@
 {
 	"name": "@dflare/svelte-enhanced-notifications",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "A simple component to manage notifications",
 	"keywords": [
 		"notification",
