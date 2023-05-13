@@ -62,13 +62,11 @@ I've been having fun with Svelte and SvelteKit for a while now, and I've decided
 
 ![notifications-screenshot]
 
-<p align="right">(<a href="#svelte-enhanced-notifications">back to top</a>)</p>
 
 ### Built With
 [![Svelte][svelte-shield]][Svelte-url]
 [![SvelteKit][svelteKit-shield]][SvelteKit-url]
 
-<p align="right">(<a href="#svelte-enhanced-notifications">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -97,7 +95,6 @@ I've been having fun with Svelte and SvelteKit for a while now, and I've decided
    notficationService.push({title: "Notification title", message: "Notification message", variant: "success"});
    ```
 
-<p align="right">(<a href="#svelte-enhanced-notifications">back to top</a>)</p>
 
 ### NotificationService component
 The `NotificationService` component is the main component that handles notifications and it provides the following properties:
@@ -110,7 +107,6 @@ You can have multiple `NotificationService` components.
 The `NotificationService` `push` method allows displaying a notification based on the notification configuration object given as input.
 
 <p align="right">(<a href="#usage">see the usage examples</a>)</p>
-<p align="right">(<a href="#svelte-enhanced-notifications">back to top</a>)</p>
 
 ### Notification configuration object
 The notification configuration object, the input for `push` method, allows using the following properties to configure a notification:
@@ -130,7 +126,6 @@ The notification configuration object, the input for `push` method, allows using
 * **`variants`**: it allows you to add additional custom variants or override the configuration of existing ones. This is an object where the properties represent the new variants.
 
 <p align="right">(<a href="#usage">see the usage examples</a>)</p>
-<p align="right">(<a href="#svelte-enhanced-notifications">back to top</a>)</p>
 
 ### Notification component
 The `Notification` component is the component that implements the individual notification and it can be used to create fully custom notifications.
@@ -155,7 +150,6 @@ It provides the following properties:
 * **`variants`**: it allows you to add additional custom variants or override the configuration of existing ones. This is an object where the properties represent the new variants.
 
 <p align="right">(<a href="#usage">see the usage examples</a>)</p>
-<p align="right">(<a href="#svelte-enhanced-notifications">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -185,7 +179,6 @@ It provides the following properties:
 
 ![notification-success-screenshot]
 
-<p align="right">(<a href="#svelte-enhanced-notifications">back to top</a>)</p>
 
 ### How to configure an auto-dismissable notification
 ```js
@@ -219,7 +212,6 @@ It provides the following properties:
 
 The dark line at the bottom of the notification is the countdown timer.
 
-<p align="right">(<a href="#svelte-enhanced-notifications">back to top</a>)</p>
 
 
 ### How to modify the colors and icon of the notification
@@ -260,7 +252,6 @@ The dark line at the bottom of the notification is the countdown timer.
 
 ![notification-custom-screenshot]
 
-<p align="right">(<a href="#svelte-enhanced-notifications">back to top</a>)</p>
 
 
 ### How to modify the position of the notifications
@@ -290,13 +281,11 @@ In this example, three NotificationService components are used with different po
 
 ![notifications-locations-screenshot]
 
-<p align="right">(<a href="#svelte-enhanced-notifications">back to top</a>)</p>
 
 <!-- LICENSE -->
 ## License
 Distributed under the MIT License. See [LICENSE.md][license-url] for more information.
 
-<p align="right">(<a href="#svelte-enhanced-notifications">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [license-shield]: https://img.shields.io/github/license/francescodessi/svelte-enhanced-notifications?&style=for-the-badge
@@ -315,4 +304,3 @@ Distributed under the MIT License. See [LICENSE.md][license-url] for more inform
 [notification-custom-success-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notification-custom-success-screenshot.png
 [notification-custom-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notification-custom-screenshot.png
 [notifications-locations-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notifications-locations-screenshot.png
-
