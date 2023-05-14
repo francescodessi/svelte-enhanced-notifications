@@ -10,7 +10,7 @@
 		"svelte-kit",
 		"svelte-component"
 	],
-	"homepage": "https://github.com/francescodessi/svelte-enhanced-notifications",
+	"homepage": "https://francescodessi.github.io/svelte-enhanced-notifications/",
 	"license": "MIT",
 	"author": {
 		"name": "Francesco Dessì"
