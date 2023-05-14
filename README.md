@@ -15,7 +15,7 @@
     <a href="https://github.com/francescodessi/svelte-enhanced-notifications"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://francescodessi.github.io/svelte-enhanced-notifications/">View Demo</a>
+    <a href="https://francescodessi.github.io/svelte-enhanced-notifications/" target="_blank">View Demo</a>
     ·
     <a href="https://github.com/francescodessi/svelte-enhanced-notifications/issues">Report Bug</a>
     ·
