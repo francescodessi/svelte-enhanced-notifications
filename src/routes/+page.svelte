@@ -67,7 +67,6 @@
             </button>
             {/if}
             <strong>Svelte Enhanced Notifications</strong>
-            <div>The demo you are currently viewing utilizes <a href="https://picocss.com/" target="_blank">Pico.css</a> as its styling framework.</div>
         </header>
 
         <div class="grid">

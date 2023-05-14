@@ -65,8 +65,22 @@ I've been having fun with Svelte and SvelteKit for a while now, and I've decided
 
 ### Built With
 [![Svelte][svelte-shield]][Svelte-url]
+
 [![SvelteKit][svelteKit-shield]][SvelteKit-url]
 
+The <a href="https://francescodessi.github.io/svelte-enhanced-notifications/" target="_blank">demo app</a> utilizes <a href="https://picocss.com/" target="_blank">Pico.css</a> as its styling framework.
+
+The SVG icons used in this project are retrieved from <a href="https://iconify.design/" target="_blank">Iconify</a>, specifically the following icons:
+- <a href="https://icon-sets.iconify.design/line-md/coffee-loop/" target="_blank">line-md:coffee-loop</a>
+- <a href="https://icon-sets.iconify.design/material-symbols/check-circle-rounded/" target="_blank">material-symbols:check-circle-rounded</a>
+- <a href="https://icon-sets.iconify.design/material-symbols/close/" target="_blank">material-symbols:close</a>
+- <a href="https://icon-sets.iconify.design/material-symbols/dark-mode-outline/" target="_blank">material-symbols:dark-mode-outline</a>
+- <a href="https://icon-sets.iconify.design/material-symbols/error-rounded/" target="_blank">material-symbols:error-rounded</a>
+- <a href="https://icon-sets.iconify.design/material-symbols/help-rounded/" target="_blank">material-symbols:help-rounded</a>
+- <a href="https://icon-sets.iconify.design/material-symbols/info-rounded/" target="_blank">material-symbols:info-rounded</a>
+- <a href="https://icon-sets.iconify.design/material-symbols/light-mode-outline/" target="_blank">material-symbols:light-mode-outline</a>
+- <a href="https://icon-sets.iconify.design/material-symbols/warning-rounded/" target="_blank">material-symbols:warning-rounded</a>
+- <a href="https://icon-sets.iconify.design/noto-v1/green-apple/" target="_blank">noto-v1:green-apple</a>
 
 <!-- GETTING STARTED -->
 ## Getting Started
