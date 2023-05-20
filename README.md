@@ -274,6 +274,10 @@ In this example, three NotificationService components are used with different po
 <script>
     import {NotificationService} from "@dflare/svelte-enhanced-notifications";
 
+    let successNotficationService;
+    let warningNotficationService;
+    let errorNotficationService;
+    
     let successNotification = {title: "Success notification", variant: "success", message: "This is an success notification"};
     let warningNotification = {title: "Warning notification", variant: "warning", message: "This is an warning notification"};
     let errorNotification = {title: "Error notification", variant: "error", message: "This is an error notification"};
