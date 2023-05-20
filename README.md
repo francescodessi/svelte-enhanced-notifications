@@ -80,6 +80,7 @@ The SVG icons used in this project are retrieved from <a href="https://iconify.d
 - <a href="https://icon-sets.iconify.design/material-symbols/info-rounded/" target="_blank">material-symbols:info-rounded</a>
 - <a href="https://icon-sets.iconify.design/material-symbols/light-mode-outline/" target="_blank">material-symbols:light-mode-outline</a>
 - <a href="https://icon-sets.iconify.design/material-symbols/warning-rounded/" target="_blank">material-symbols:warning-rounded</a>
+- <a href="https://icon-sets.iconify.design/mdi/github/" target="_blank">mdi:github</a>
 - <a href="https://icon-sets.iconify.design/noto-v1/green-apple/" target="_blank">noto-v1:green-apple</a>
 
 <!-- GETTING STARTED -->
