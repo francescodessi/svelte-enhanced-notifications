@@ -114,8 +114,8 @@ The SVG icons used in this project are retrieved from <a href="https://iconify.d
 ### NotificationService component
 The `NotificationService` component is the main component that handles notifications and it provides the following properties:
 
-* **`location`**: a string that defines the position on the screen where to display the notifications.The allowed values are: `"topLeft"`, `"top"`, `"topRight"`, `"left"`, `"center"`, `"right"`, `"bottomLeft"`, `"bottom"`, `"bottomRight"`. The default value is `"top"`.
-* **`locations`**: it allows you to add additional custom locations or override the configuration of existing ones. This is an object where the properties represent the new locations, check the DEFAULT_LOCATIONS constant in the <a href="https://github.com/francescodessi/svelte-enhanced-notifications/blob/main/src/lib/configurations.js#L34" target="_blank">configurations.js</a> file and <a href="#how-to-modify-the-position-of-the-notifications">examples</a>.
+* **`location`**: a string that defines the position on the screen where to display the notifications. The allowed values are: `"topLeft"`, `"top"`, `"topRight"`, `"left"`, `"center"`, `"right"`, `"bottomLeft"`, `"bottom"`, `"bottomRight"`. The default value is `"top"`.
+* **`locations`**: it allows you to add additional custom locations or override the configuration of existing ones. This is an object where the properties represent the new locations, check the `DEFAULT_LOCATIONS` constant in the <a href="https://github.com/francescodessi/svelte-enhanced-notifications/blob/main/src/lib/configurations.js#L34" target="_blank">configurations.js</a> file and <a href="#how-to-modify-the-position-of-the-notifications">examples</a>.
 * **`notifications`**: it allows to specify the array of notifications the `NotificationService` component should work with. By default, the component uses its own non-shared array.
 
 You can have multiple `NotificationService` components.
@@ -138,7 +138,7 @@ The notification configuration object, the input for `push` method, allows using
 * **`showCountdown`**: a boolean that, when `true`, allows showing an indication of how long the notification will remain visible. The default value is `false`.
 * **`title`**: a string that defines the title of the notification.
 * **`variant`**: a string that allows using one of the predefined variants to define the style of the notification. The allowed values are: `"default"`, `"error"`, `"warning"`, `"success"`, `"info"`, `"help"`.
-* **`variants`**: it allows you to add additional custom variants or override the configuration of existing ones. This is an object where the properties represent the new variants, check the DEFAULT_VARIANTS constant in the <a href="https://github.com/francescodessi/svelte-enhanced-notifications/blob/main/src/lib/configurations.js#L1" target="_blank">configurations.js</a> file and <a href="#how-to-modify-the-colors-and-icon-of-the-notification">examples</a>.
+* **`variants`**: it allows you to add additional custom variants or override the configuration of existing ones. This is an object where the properties represent the new variants, check the `DEFAULT_VARIANTS` constant in the <a href="https://github.com/francescodessi/svelte-enhanced-notifications/blob/main/src/lib/configurations.js#L1" target="_blank">configurations.js</a> file and <a href="#how-to-modify-the-colors-and-icon-of-the-notification">examples</a>.
 
 <p align="right">(<a href="#usage">see the usage examples</a>)</p>
 
