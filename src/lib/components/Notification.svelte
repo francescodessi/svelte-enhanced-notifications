@@ -58,7 +58,7 @@
             </slot>
         </div>
         <div class="close">
-            {#if showCloseButton}
+            {#if showCloseButton ?? true}
                 <button title="Close" on:click>
                     <Icon name="close" color={primaryColorVariant} />
                 </button>
@@ -66,7 +66,7 @@
         </div>
     </div>
     {#if autoDismissible && showCountdown}
-        <div class="countdown" style:transition-duration={`${countdownDuration}ms`} style:transform={countdownStart ? "scaleX(0)" : "scaleX(1)"}></div>
+        <div class="countdown" style:transition-duration={`${countdownDuration ?? 3000}ms`} style:transform={countdownStart ? "scaleX(0)" : "scaleX(1)"}></div>
     {/if}
 </div>
 
