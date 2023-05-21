@@ -115,7 +115,7 @@ The SVG icons used in this project are retrieved from <a href="https://iconify.d
 The `NotificationService` component is the main component that handles notifications and it provides the following properties:
 
 * **`location`**: a string that defines the position on the screen where to display the notifications.The allowed values are: `"topLeft"`, `"top"`, `"topRight"`, `"left"`, `"center"`, `"right"`, `"bottomLeft"`, `"bottom"`, `"bottomRight"`. The default value is `"top"`.
-* **`locations`**: it allows you to add additional custom locations or override the configuration of existing ones (check the DEFAULT_LOCATIONS constant in the <a href="https://github.com/francescodessi/svelte-enhanced-notifications/blob/main/src/lib/configurations.js#L34" target="_blank">configurations.js</a> file and <a href="#how-to-modify-the-position-of-the-notifications">examples</a>). This is an object where the properties represent the new locations.
+* **`locations`**: it allows you to add additional custom locations or override the configuration of existing ones. This is an object where the properties represent the new locations, check the DEFAULT_LOCATIONS constant in the <a href="https://github.com/francescodessi/svelte-enhanced-notifications/blob/main/src/lib/configurations.js#L34" target="_blank">configurations.js</a> file and <a href="#how-to-modify-the-position-of-the-notifications">examples</a>.
 * **`notifications`**: it allows to specify the array of notifications the `NotificationService` component should work with. By default, the component uses its own non-shared array.
 
 You can have multiple `NotificationService` components.
@@ -138,7 +138,7 @@ The notification configuration object, the input for `push` method, allows using
 * **`showCountdown`**: a boolean that, when `true`, allows showing an indication of how long the notification will remain visible. The default value is `false`.
 * **`title`**: a string that defines the title of the notification.
 * **`variant`**: a string that allows using one of the predefined variants to define the style of the notification. The allowed values are: `"default"`, `"error"`, `"warning"`, `"success"`, `"info"`, `"help"`.
-* **`variants`**: it allows you to add additional custom variants or override the configuration of existing ones. This is an object where the properties represent the new variants.
+* **`variants`**: it allows you to add additional custom variants or override the configuration of existing ones. This is an object where the properties represent the new variants, check the DEFAULT_VARIANTS constant in the <a href="https://github.com/francescodessi/svelte-enhanced-notifications/blob/main/src/lib/configurations.js#L1" target="_blank">configurations.js</a> file and <a href="#how-to-modify-the-colors-and-icon-of-the-notification">examples</a>.
 
 <p align="right">(<a href="#usage">see the usage examples</a>)</p>
 
@@ -233,20 +233,23 @@ The dark line at the bottom of the notification is the countdown timer.
 
 
 ### How to modify the colors and icon of the notification
+You can customize the appearance of notifications by leveraging individual properties `customIconSvg`, `customPrimaryColor`, `customPrimaryColorVariant` and `customFontColor` or by defining custom variants.
 ```js
 <script>
     import {NotificationService} from "@dflare/svelte-enhanced-notifications";
 
     let notficationService;
     
-    let myNotification1 = {
+    // A success notification with a custom icon
+    let successNotificationCusomIcon = {
         title: "Success notification with cusom icon",
         variant: "success",
         message: "This is a success notification with cusom icon",        
         customIconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 128 128"><path fill="#bdcf46" d="M60.75 33.92c-10.86-1.41-21.57-4.02-31.69 2.28c-9.45 5.9-16.69 15.98-19.45 26.75c-3.9 15.23-1.59 32.57 8.83 44.77c5.72 6.69 15.23 13.81 23.73 16.47c21.82 6.82 48.79 3.58 62.48-16.74c3.91-5.8 7.83-13.66 9.26-20.55c4.01-19.26-.48-41.83-20.42-50.12c-8.88-3.69-18.37-1.66-27.65-2.33c-1.7-.12-3.4-.31-5.09-.53z"/><path fill="#757f3f" d="M93.92.58c7.24-.23 19.38 3 24.29 8.17c.6.64 1.75 1.55 1.92 2.36c.27 1.31-.77 2.43-1.53 3.4c-10.8 13.79-32.92 20.94-46.92 11.57c-1.96-1.31-.91-3.74-.51-5.75c1.6-8.02 7.8-15.38 15.43-18.29A22.33 22.33 0 0 1 93.92.58z"/><path fill="#855c52" d="M71.41 21.92c-.07-.26-.2-.49-.39-.64c-.4-.31-1.23-.62-1.7-.79c-.71-.27-1.47-.38-2.21-.38c-.28 0-.55.01-.81.04c-1 .12-1.86.49-2.43 1.3c-.76 1.05-.63 2.24-.83 3.46c-.28 1.74-1.1 3.32-1.55 5.02c-.35 1.31-.63 2.64-.88 3.98c-.19.98-.35 1.96-.47 2.95c-.43 3.67-1.03 7.34-.87 11.05c.01.51.03 1.02.06 1.53c.01.26.04.51.08.77c.06.34.08.73.12 1.12c.02.14.03.28.05.42c.11.6.32 1.16.89 1.47c.72.4 1.55.58 2.39.59c.26 0 .52-.04.77-.06l.66-.04c.32-.09.65-.21.98-.3c.53-.13 1.05-.4 1.42-.81c.33-.37.37-.75.35-1.19l-.03-.31c-.04-.39-.07-.79-.09-1.19c-.05-.79-.07-1.6-.09-2.39c-.06-1.78-.03-3.58.13-5.36c.11-1.06.16-2.14.25-3.2c.11-1.48.32-2.95.57-4.42c.06-.31.09-.61.15-.91c.36-1.88 1.03-3.57 1.75-5.35c.33-.82.47-1.69.77-2.48c.33-.82 1.06-1.27 1.06-2.25c0-.46.05-1.11-.1-1.63z"/><path fill="#2f2f2f" d="M59.02 50.25c-2.34-.5-4.62-1.33-6.76-2.38c-1.12-.55-4.36-3.13-4.69-.42c-.42 3.27 4.09 6.09 6.33 7.14c3.86 1.82 8.18 2.47 12.33 1.63c3.99-.81 7.41-2.78 9.97-6.24c.32-.45.55-.98.71-1.48c.57-1.81-1.41-1.83-2.47-1.32c-.86.41-1.6 1.07-2.46 1.48c-1.64.79-3.36 1.43-5.11 1.77c-2.61.49-5.26.36-7.85-.18z"/><path fill="#fff" d="M39.17 43.59c-1.28-1.72-4.79-1.88-7.29-1.03c-3.09 1.06-5.84 3.36-7.77 5.97c-1.66 2.24-4.1 6.94-1.69 9.51c1.18 1.25 2.61.76 3.97.08c2.46-1.23 3.96-3.92 6.04-5.65c2.14-1.77 9.72-4.95 6.74-8.88z"/></svg>'    
     };
 
-    let myNotification2 = {
+    // A default notification with custom colors
+    let customColorNotification = {
         title: "Custom colors notification", 
         message: "This is a notification with cusom colors",        
         customIconSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="48" stroke-dashoffset="48" d="M17 9v9a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V9z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="48;0"/></path><path stroke-dasharray="14" stroke-dashoffset="14" d="M17 14H20C20.55 14 21 13.55 21 13V10C21 9.45 20.55 9 20 9H17"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="14;28"/></path></g><mask id="lineMdCoffeeLoop0"><path fill="none" stroke="#fff" stroke-width="2" d="M8 0c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4M12 0c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4M16 0c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4"><animateMotion calcMode="linear" dur="3s" path="M0 0v-8" repeatCount="indefinite"/></path></mask><rect width="24" height="0" y="7" fill="currentColor" mask="url(#lineMdCoffeeLoop0)"><animate fill="freeze" attributeName="y" begin="0.8s" dur="0.6s" values="7;2"/><animate fill="freeze" attributeName="height" begin="0.8s" dur="0.6s" values="0;5"/></rect></svg>',
@@ -255,20 +258,48 @@ The dark line at the bottom of the notification is the countdown timer.
         customFontColor: "#f0f0f0"        
     };
 
-    function showNotification() {
-        notficationService?.push(myNotification1);
-        notficationService?.push(myNotification2);
+    // Custom variants example
+    const CUSTOM_VARIANTS = {
+        error: { // Default error variant overriding
+            primaryColor: "#009739",
+            primaryColorVariant: "#FEDD00",
+            fontColor: "#FEDD00",
+        },
+        customVariant: {
+            primaryColor: "#22838d",
+            primaryColorVariant: "#0a1415",
+            fontColor: "#ffffff",
+        }
+    };
+
+    let errorVariantOverridingNotification  = {
+        title: "Default error variant overriding", 
+        message: "This is a notification", 
+        variant: "error", 
+        variants: CUSTOM_VARIANTS
+    };
+
+    let customVariantNotification  = {
+        title: "Custom variant", 
+        message: "This is a notification", 
+        variant: "customVariant", 
+        variants: CUSTOM_VARIANTS,
+    };
+
+    function showNotifications() {
+        notficationService?.push(successNotificationCusomIcon);
+        notficationService?.push(customColorNotification);
+        notficationService?.push(errorVariantOverridingNotification);
+        notficationService?.push(customVariantNotification);
     }
 </script>
 
-<NotificationService bind:this={notficationService}/>
-<button on:click={showNotification}>Show Notification</button>
+<NotificationService bind:this={notficationService} location="top"/>
+<button on:click={showNotifications}>Show Notifications</button>
 ```
 **Result**
 
-![notification-custom-success-screenshot]
-
-![notification-custom-screenshot]
+![notification-custom-colors-screenshot]
 
 <p align="right">(<a href="https://svelte.dev/repl/72521d51a438466eb55445975d926902?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
 
@@ -355,6 +386,5 @@ Distributed under the MIT License. See [LICENSE.md][license-url] for more inform
 [notifications-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notifications-screenshot.png
 [notification-success-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notification-success-screenshot.png
 [notification-warning-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notification-warning-screenshot.png
-[notification-custom-success-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notification-custom-success-screenshot.png
-[notification-custom-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notification-custom-screenshot.png
+[notification-custom-colors-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notification-custom-colors-screenshot.png
 [notifications-locations-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notifications-locations-screenshot.png
