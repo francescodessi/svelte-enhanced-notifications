@@ -115,7 +115,7 @@ The SVG icons used in this project are retrieved from <a href="https://iconify.d
 The `NotificationService` component is the main component that handles notifications and it provides the following properties:
 
 * **`location`**: a string that defines the position on the screen where to display the notifications.The allowed values are: `"topLeft"`, `"top"`, `"topRight"`, `"left"`, `"center"`, `"right"`, `"bottomLeft"`, `"bottom"`, `"bottomRight"`. The default value is `"top"`.
-* **`locations`**: it allows you to add additional custom locations or override the configuration of existing ones. This is an object where the properties represent the new locations.
+* **`locations`**: it allows you to add additional custom locations or override the configuration of existing ones (check the DEFAULT_LOCATIONS constant in the <a href="https://github.com/francescodessi/svelte-enhanced-notifications/blob/main/src/lib/configurations.js#L34" target="_blank">configurations.js</a> file and <a href="#how-to-modify-the-position-of-the-notifications">examples</a>). This is an object where the properties represent the new locations.
 * **`notifications`**: it allows to specify the array of notifications the `NotificationService` component should work with. By default, the component uses its own non-shared array.
 
 You can have multiple `NotificationService` components.
@@ -194,6 +194,8 @@ It provides the following properties:
 
 ![notification-success-screenshot]
 
+<p align="right">(<a href="https://svelte.dev/repl/23e6abbae530474a9e09e23392005dbb?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+
 
 ### How to configure an auto-dismissable notification
 ```js
@@ -227,6 +229,7 @@ It provides the following properties:
 
 The dark line at the bottom of the notification is the countdown timer.
 
+<p align="right">(<a href="https://svelte.dev/repl/86604216e9ea40c4baf31d13659ecced?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
 
 
 ### How to modify the colors and icon of the notification
@@ -267,38 +270,70 @@ The dark line at the bottom of the notification is the countdown timer.
 
 ![notification-custom-screenshot]
 
+<p align="right">(<a href="https://svelte.dev/repl/72521d51a438466eb55445975d926902?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
 
 
 ### How to modify the position of the notifications
-In this example, three NotificationService components are used with different positions for the notifications.
+In this example, five NotificationService components are used with different positions for the notifications.
 ```js
 <script>
     import {NotificationService} from "@dflare/svelte-enhanced-notifications";
 
-    let successNotficationService;
-    let warningNotficationService;
-    let errorNotficationService;
-    
-    let successNotification = {title: "Success notification", variant: "success", message: "This is an success notification"};
-    let warningNotification = {title: "Warning notification", variant: "warning", message: "This is an warning notification"};
-    let errorNotification = {title: "Error notification", variant: "error", message: "This is an error notification"};
+    const CUSTOM_LOCATIONS = {
+        top: {  // Default top location overriding
+            position: "fixed",
+            top: "100px",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            zIndex: "1",
+            transform: "translate(-50%, 0)"
+        },
+        customLocation: {
+            position: "fixed",
+            top: "25%",
+            left: "auto",
+            right: "auto",
+            bottom: "auto",
+            zIndex: "1",
+            transform: "rotate(20deg)"
+        },
+    };
 
-    function showNotification() {
-        successNotficationService?.push(successNotification);
-        warningNotficationService?.push(warningNotification);
-        errorNotficationService?.push(errorNotification);
+    let topNotficationService;
+    let centerNotficationService;
+    let bottomNotficationService;
+    let customTopNotficationService;
+    let customLocationNotficationService;
+    
+    let topNotification = {title: "Top notification", variant: "success", message: "This is a notification"};
+    let centerNotification = {title: "Center notification", variant: "warning", message: "This is a notification"};
+    let bottomNotification = {title: "Bottom notification", variant: "error", message: "This is a notification"};
+    let topOverridingNotification = {title: "Default top location overriding", variant: "info", message: "This is a notification"};
+    let customLocationNotification = {title: "New custom location", variant: "help", message: "This is a notification"};
+
+    function showNotifications() {
+        topNotficationService?.push(topNotification);
+        centerNotficationService?.push(centerNotification);
+        bottomNotficationService?.push(bottomNotification);
+        customTopNotficationService?.push(topOverridingNotification);
+        customLocationNotficationService?.push(customLocationNotification);
     }
 </script>
 
-<NotificationService bind:this={successNotficationService} location="top"/>
-<NotificationService bind:this={warningNotficationService} location="center"/>
-<NotificationService bind:this={errorNotficationService} location="bottom"/>
-<button on:click={showNotification}>Show Notification</button>
+<NotificationService bind:this={topNotficationService} location="top"/>
+<NotificationService bind:this={centerNotficationService} location="center"/>
+<NotificationService bind:this={bottomNotficationService} location="bottom"/>
+<NotificationService bind:this={customTopNotficationService} location="top" locations={CUSTOM_LOCATIONS}/>
+<NotificationService bind:this={customLocationNotficationService} location="customLocation" locations={CUSTOM_LOCATIONS}/>
+<button on:click={showNotifications}>Show Notifications</button>
 ```
 
 **Result**
 
 ![notifications-locations-screenshot]
+
+<p align="right">(<a href="https://svelte.dev/repl/9b91a551dbed4bd5b1ba33b491b10039?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
 
 
 <!-- LICENSE -->
