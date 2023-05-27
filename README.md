@@ -41,6 +41,7 @@
         <li><a href="#notificationservice-component">NotificationService component</a></li>
         <li><a href="#notification-configuration-object">Notification configuration object</a></li>
         <li><a href="#notification-component">Notification component</a></li>
+        <li><a href="#utility-function-pushnotification">Utility function pushNotification</a></li>
       </ul>
     </li>    
     <li>
@@ -166,6 +167,14 @@ It provides the following properties:
 * **`variants`**: it allows you to add additional custom variants or override the configuration of existing ones. This is an object where the properties represent the new variants.
 
 <p align="right">(<a href="#usage">see the usage examples</a>)</p>
+
+
+### Utility function pushNotification
+In certain situations, it could be useful to have a function that displays notifications independently of the NotificationService component `push` method. For this purpose, you can import and use the `pushNotification` function. This function takes two input parameters: the new notification to display and the container to place the new notification in. It returns the updated notification container as output.
+
+<p align="right">(<a href="#how-to-use-an-arbitrary-array-as-a-notification-container-and-share-it-among-multiple-notificationservice-component">see the usage examples</a>)</p>
+
+
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -371,7 +380,7 @@ In this example, five NotificationService components are used with different pos
 
 ### How to use an arbitrary array as a notification container and share it among multiple NotificationService component
 
-In the following example, three different `NotificationService` components have been defined that share the same notification container. To display a notification, you can use any `push` method available from one of the three `NotificationService` components.
+In the following examples, three different `NotificationService` components have been defined that share the same notification container. To display a notification, you can use any `push` method available from one of the three `NotificationService` components or the `pushNotification` function.
 
 ```js
 <script>
@@ -381,10 +390,10 @@ In the following example, three different `NotificationService` components have 
     let notficationServiceCenter;
     let notficationServiceBottom;
 
-    // For convenience, I retrieve the push method from any NotificationService component.
+    // For convenience, I retrieve the push method from any NotificationService component
     const pushNotification = (notification) => notficationServiceTop?.push(notification);   
 
-    // The shared notification container among the NotificationService components.
+    // The shared notification container among the NotificationService components
     let notifications = [];
     
     let myNotification = {
@@ -407,7 +416,42 @@ In the following example, three different `NotificationService` components have 
 ```
 <p align="right">(<a href="https://svelte.dev/repl/ab682b7d97a948d9806af9d32daba521?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
 
-The following example is similar to the previous one, but it uses a Svelte store as the shared notification container.
+
+The following example is identical to the previous one but uses the  `pushNotification` function instead of `push` method of a certain component.
+
+```js
+<script>
+    import {NotificationService} from "@dflare/svelte-enhanced-notifications";
+    import {pushNotification} from "@dflare/svelte-enhanced-notifications";
+
+    let notficationServiceTop;
+    let notficationServiceCenter;
+    let notficationServiceBottom;
+
+    // The shared notification container among the NotificationService components
+    let notifications = [];
+    
+    let myNotification = {
+        title: "Success notification", 
+        message: "This is a success notification",
+        variant: "success",
+        autoDismissible: true,
+        showCountdown: true
+    };
+
+    function showNotification() {
+        notifications = pushNotification(myNotification, notifications);
+    }
+</script>
+
+<NotificationService bind:this={notficationServiceTop} bind:notifications={notifications} location="top"/>
+<NotificationService bind:this={notficationServiceCenter} bind:notifications={notifications} location="center"/>
+<NotificationService bind:this={notficationServiceBottom} bind:notifications={notifications} location="bottom"/>
+<button on:click={showNotification}>Show Notification</button>
+```
+<p align="right">(<a href="https://svelte.dev/repl/d5a8e4bd4e53449e84fd3d321f5fd1bb?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+
+The following example is similar to the previous one, but it uses a Svelte `store` as the shared notification container.
 
 **store.js**
 ```js
@@ -420,14 +464,14 @@ export const notifications = writable([]);
 <script>
     import {NotificationService} from "@dflare/svelte-enhanced-notifications";
     
-    // Using store as shared notification container among the NotificationService components.
+    // Using store as shared notification container among the NotificationService components
     import {notifications} from './stores.js'; 
 
     let notficationServiceTop;
     let notficationServiceCenter;
     let notficationServiceBottom;
 
-    // For convenience, I retrieve the push method from any NotificationService component.
+    // For convenience, I retrieve the push method from any NotificationService component
     const pushNotification = (notification) => notficationServiceTop?.push(notification);   
    
     let myNotification = {
@@ -451,7 +495,45 @@ export const notifications = writable([]);
 
 <p align="right">(<a href="https://svelte.dev/repl/1fe266f67d3a49fdb82724ecb80a1b9c?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
 
+The following example is identical to the previous one but uses the  `pushNotification` function instead of `push` method of a certain component.
 
+**store.js**
+```js
+import { writable } from 'svelte/store';
+export const notifications = writable([]);
+```
+
+**App.svelte**
+```js
+<script>
+    import {NotificationService} from "@dflare/svelte-enhanced-notifications";
+    import {pushNotification} from "@dflare/svelte-enhanced-notifications";
+    import {notifications} from './stores.js'; 
+
+    let notficationServiceTop;
+    let notficationServiceCenter;
+    let notficationServiceBottom;
+    
+    let myNotification = {
+        title: "Success notification", 
+        message: "This is a success notification",
+        variant: "success",
+        autoDismissible: true,
+        showCountdown: true
+    };
+
+    function showNotification() {
+        $notifications = pushNotification(myNotification, $notifications);
+    }
+</script>
+
+<NotificationService bind:this={notficationServiceTop} bind:notifications={$notifications} location="top"/>
+<NotificationService bind:this={notficationServiceCenter} bind:notifications={$notifications} location="center"/>
+<NotificationService bind:this={notficationServiceBottom} bind:notifications={$notifications} location="bottom"/>
+<button on:click={showNotification}>Show Notification</button>
+```
+
+<p align="right">(<a href="https://svelte.dev/repl/a88db197062f40868821018261f9056f?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
 
 <!-- LICENSE -->
 ## License
