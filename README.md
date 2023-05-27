@@ -465,7 +465,7 @@ export const notifications = writable([]);
     import {NotificationService} from "@dflare/svelte-enhanced-notifications";
     
     // Using store as shared notification container among the NotificationService components
-    import {notifications} from './stores.js'; 
+    import {notifications} from './store.js'; 
 
     let notficationServiceTop;
     let notficationServiceCenter;
@@ -508,7 +508,7 @@ export const notifications = writable([]);
 <script>
     import {NotificationService} from "@dflare/svelte-enhanced-notifications";
     import {pushNotification} from "@dflare/svelte-enhanced-notifications";
-    import {notifications} from './stores.js'; 
+    import {notifications} from './store.js'; 
 
     let notficationServiceTop;
     let notficationServiceCenter;
