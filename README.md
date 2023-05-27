@@ -50,6 +50,7 @@
         <li><a href="#how-to-configure-an-auto-dismissable-notification">How to configure an auto-dismissable notification</a></li>
         <li><a href="#how-to-modify-the-colors-and-icon-of-the-notification">How to modify the colors and icon of the notification</a></li>
         <li><a href="#how-to-modify-the-position-of-the-notifications">How to modify the position of the notifications</a></li>
+        <li><a href="#how-to-use-an-arbitrary-array-as-a-notification-container-and-share-it-among-multiple-notificationservice-component">How to use an arbitrary array as a notification container and share it among multiple NotificationService component</a></li>
       </ul>
     </li>
   </ol>
@@ -116,7 +117,7 @@ The `NotificationService` component is the main component that handles notificat
 
 * **`location`**: a string that defines the position on the screen where to display the notifications. The allowed values are: `"topLeft"`, `"top"`, `"topRight"`, `"left"`, `"center"`, `"right"`, `"bottomLeft"`, `"bottom"`, `"bottomRight"`. The default value is `"top"`.
 * **`locations`**: it allows you to add additional custom locations or override the configuration of existing ones. This is an object where the properties represent the new locations, check the `DEFAULT_LOCATIONS` constant in the <a href="https://github.com/francescodessi/svelte-enhanced-notifications/blob/main/src/lib/configurations.js#L34" target="_blank">configurations.js</a> file and <a href="#how-to-modify-the-position-of-the-notifications">examples</a>.
-* **`notifications`**: it allows to specify the array of notifications the `NotificationService` component should work with. By default, the component uses its own non-shared array.
+* **`notifications`**: it allows to specify the array of notifications the `NotificationService` component should work with. By default, the component uses its own non-shared array. Check <a href="#how-to-use-an-arbitrary-array-as-a-notification-container-and-share-it-among-multiple-notificationservice-component">examples</a>.
 
 You can have multiple `NotificationService` components.
 The `NotificationService` `push` method allows displaying a notification based on the notification configuration object given as input.
@@ -365,6 +366,91 @@ In this example, five NotificationService components are used with different pos
 ![notifications-locations-screenshot]
 
 <p align="right">(<a href="https://svelte.dev/repl/9b91a551dbed4bd5b1ba33b491b10039?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+
+
+
+### How to use an arbitrary array as a notification container and share it among multiple NotificationService component
+
+In the following example, three different `NotificationService` components have been defined that share the same notification container. To display a notification, you can use any `push` method available from one of the three `NotificationService` components.
+
+```js
+<script>
+    import {NotificationService} from "@dflare/svelte-enhanced-notifications";
+
+    let notficationServiceTop;
+    let notficationServiceCenter;
+    let notficationServiceBottom;
+
+    // For convenience, I retrieve the push method from any NotificationService component.
+    const pushNotification = (notification) => notficationServiceTop?.push(notification);   
+
+    // The shared notification container among the NotificationService components.
+    let notifications = [];
+    
+    let myNotification = {
+        title: "Success notification", 
+        message: "This is a success notification",
+        variant: "success",
+        autoDismissible: true,
+        showCountdown: true
+    };
+
+    function showNotification() {
+        pushNotification(myNotification);
+    }
+</script>
+
+<NotificationService bind:this={notficationServiceTop} bind:notifications={notifications} location="top"/>
+<NotificationService bind:this={notficationServiceCenter} bind:notifications={notifications} location="center"/>
+<NotificationService bind:this={notficationServiceBottom} bind:notifications={notifications} location="bottom"/>
+<button on:click={showNotification}>Show Notification</button>
+```
+<p align="right">(<a href="https://svelte.dev/repl/ab682b7d97a948d9806af9d32daba521?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+
+The following example is similar to the previous one, but it uses a Svelte store as the shared notification container.
+
+**store.js**
+```js
+import { writable } from 'svelte/store';
+export const notifications = writable([]);
+```
+
+**App.svelte**
+```js
+<script>
+    import {NotificationService} from "@dflare/svelte-enhanced-notifications";
+    
+    // Using store as shared notification container among the NotificationService components.
+    import {notifications} from './stores.js'; 
+
+    let notficationServiceTop;
+    let notficationServiceCenter;
+    let notficationServiceBottom;
+
+    // For convenience, I retrieve the push method from any NotificationService component.
+    const pushNotification = (notification) => notficationServiceTop?.push(notification);   
+   
+    let myNotification = {
+        title: "Success notification", 
+        message: "This is a success notification",
+        variant: "success",
+        autoDismissible: true,
+        showCountdown: true
+    };
+
+    function showNotification() {
+        pushNotification(myNotification);
+    }
+</script>
+
+<NotificationService bind:this={notficationServiceTop} bind:notifications={$notifications} location="top"/>
+<NotificationService bind:this={notficationServiceCenter} bind:notifications={$notifications} location="center"/>
+<NotificationService bind:this={notficationServiceBottom} bind:notifications={$notifications} location="bottom"/>
+<button on:click={showNotification}>Show Notification</button>
+```
+
+<p align="right">(<a href="https://svelte.dev/repl/1fe266f67d3a49fdb82724ecb80a1b9c?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+
 
 
 <!-- LICENSE -->
