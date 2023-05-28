@@ -48,7 +48,7 @@
             </slot>
         </div>
         <div class="content">
-            <slot>
+            <slot name="content">
                 {#if title}
                     <div class="title">{title}</div>
                 {/if}

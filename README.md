@@ -52,6 +52,7 @@
         <li><a href="#how-to-modify-the-colors-and-icon-of-the-notification">How to modify the colors and icon of the notification</a></li>
         <li><a href="#how-to-modify-the-position-of-the-notifications">How to modify the position of the notifications</a></li>
         <li><a href="#how-to-use-an-arbitrary-array-as-a-notification-container-and-share-it-among-multiple-notificationservice-component">How to use an arbitrary array as a notification container and share it among multiple NotificationService component</a></li>
+        <li><a href="#how-to-create-custom-notifications">How to create custom notifications</a></li>
       </ul>
     </li>
   </ol>
@@ -164,9 +165,9 @@ It provides the following properties:
 * **`showCountdown`**: a boolean that, when `true`, allows showing an indication of how long the notification will remain visible. The default value is `false`.
 * **`title`**: a string that defines the title of the notification.
 * **`variant`**: a string that allows using one of the predefined variants to define the style of the notification. The allowed values are: `"default"`, `"error"`, `"warning"`, `"success"`, `"info"`, `"help"`.
-* **`variants`**: it allows you to add additional custom variants or override the configuration of existing ones. This is an object where the properties represent the new variants.
+* **`variants`**: it allows you to add additional custom variants or override the configuration of existing ones. This is an object where the properties represent the new variants. This is an object where the properties represent the new variants, check the `DEFAULT_VARIANTS` constant in the <a href="https://github.com/francescodessi/svelte-enhanced-notifications/blob/main/src/lib/configurations.js#L1" target="_blank">configurations.js</a> file and <a href="#how-to-create-custom-notifications">examples</a>.
 
-<p align="right">(<a href="#usage">see the usage examples</a>)</p>
+<p align="right">(<a href="#how-to-create-custom-notifications">see the usage examples</a>)</p>
 
 
 ### Utility function pushNotification
@@ -454,12 +455,14 @@ The following example is identical to the previous one but uses the  `pushNotifi
 The following example is similar to the previous one, but it uses a Svelte `store` as the shared notification container.
 
 **store.js**
+
 ```js
 import { writable } from 'svelte/store';
 export const notifications = writable([]);
 ```
 
 **App.svelte**
+
 ```js
 <script>
     import {NotificationService} from "@dflare/svelte-enhanced-notifications";
@@ -498,12 +501,14 @@ export const notifications = writable([]);
 The following example is identical to the previous one but uses the  `pushNotification` function instead of `push` method of a certain component.
 
 **store.js**
+
 ```js
 import { writable } from 'svelte/store';
 export const notifications = writable([]);
 ```
 
 **App.svelte**
+
 ```js
 <script>
     import {NotificationService} from "@dflare/svelte-enhanced-notifications";
@@ -535,6 +540,112 @@ export const notifications = writable([]);
 
 <p align="right">(<a href="https://svelte.dev/repl/a88db197062f40868821018261f9056f?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
 
+
+### How to create custom notifications
+In the following example, a custom component has been created to serve as a notification to be used with the `NotificationService` component. The custom component is based on the default `Notification` component and its properties for its functioning. In the example, the two slots provided by the default `Notification` component were leveraged. In this case, the implementation of the icon was delegated to the `CustomIcon` component.
+You can also create a component independent of the default `Notification` component, but you still need to manage the properties required for the functioning of the `NotificationService` component.
+
+**App.svelte**
+
+```js
+<script>
+    import {NotificationService} from "@dflare/svelte-enhanced-notifications";
+    import CustomNotification from "./CustomNotification.svelte";
+
+    let notficationService;
+    
+    let myNotification1 = {
+        component: CustomNotification,
+        title: "Success notification", 
+        message: "This is a notification",
+        variant: "success"
+    };
+
+    let myNotification2 = {
+        component: CustomNotification,
+        title: "Success notification", 
+        message: "This is a notification",
+        variant: "customVariant"
+    };
+
+    function showNotification() {
+        notficationService?.push(myNotification1);
+        notficationService?.push(myNotification2);
+    }
+</script>
+
+<NotificationService bind:this={notficationService}/>
+<button on:click={showNotification}>Show Notification</button>
+```
+
+**CustomNotification.svelte**
+
+```js
+<script>
+    import {Notification} from "@dflare/svelte-enhanced-notifications";
+    import CustomIcon from "./CustomIcon.svelte";
+
+    // Custom variants
+    const CUSTOM_VARIANTS = {
+        customVariant: {
+            primaryColor: "#1095c1",
+            primaryColorVariant: "#07495f",
+            fontColor: "#f0f0f0",
+        }
+    };
+
+    // The properties required by the default Notification component and its functioning whith the NotificationService component.
+    export let title = undefined;
+    export let message = undefined;    
+    export let variant = undefined;
+    export let variants = CUSTOM_VARIANTS;
+    export let customIconSvg = undefined;
+    export let customPrimaryColor = undefined;
+    export let customPrimaryColorVariant = undefined;
+    export let customFontColor = undefined;
+    export let showCloseButton = true; 
+    export let autoDismissible = false;
+    export let showCountdown = false;
+    export let countdownDuration = 3000;
+    export let countdownStart = false;
+</script>
+
+<!-- Default Notification component -->
+<Notification on:click title={title} message={message} variant={variant} variants={variants} customIconSvg={customIconSvg} customPrimaryColor={customPrimaryColor} customPrimaryColorVariant={customPrimaryColorVariant} customFontColor={customFontColor} showCloseButton={showCloseButton} autoDismissible={autoDismissible} showCountdown={showCountdown} countdownDuration={countdownDuration} countdownStart={countdownStart}>
+    <div slot="icon">
+        <CustomIcon/>
+    </div>
+    <div slot="content">
+        <details>
+            <summary>Section 1</summary>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </details>
+        <details>
+            <summary>Section 2</summary>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </details>
+        <details>
+            <summary>Section 3</summary>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        </details>
+    </div>
+</Notification>
+```
+
+**CustomIcon.svelte**
+
+```js
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="48" stroke-dashoffset="48" d="M17 9v9a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V9z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="48;0"/></path><path stroke-dasharray="14" stroke-dashoffset="14" d="M17 14H20C20.55 14 21 13.55 21 13V10C21 9.45 20.55 9 20 9H17"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="14;28"/></path></g><mask id="lineMdCoffeeLoop0"><path fill="none" stroke="#fff" stroke-width="2" d="M8 0c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4M12 0c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4M16 0c0 2-2 2-2 4s2 2 2 4-2 2-2 4 2 2 2 4"><animateMotion calcMode="linear" dur="3s" path="M0 0v-8" repeatCount="indefinite"/></path></mask><rect width="24" height="0" y="7" fill="currentColor" mask="url(#lineMdCoffeeLoop0)"><animate fill="freeze" attributeName="y" begin="0.8s" dur="0.6s" values="7;2"/><animate fill="freeze" attributeName="height" begin="0.8s" dur="0.6s" values="0;5"/></rect></svg>
+```
+
+**Result**
+
+![notification-custom-component-screenshot]
+
+<p align="right">(<a href="https://svelte.dev/repl/1ba18683422c41f2960055ee28c9dd1b?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+
+
+
 <!-- LICENSE -->
 ## License
 Distributed under the MIT License. See [LICENSE.md][license-url] for more information.
@@ -556,3 +667,6 @@ Distributed under the MIT License. See [LICENSE.md][license-url] for more inform
 [notification-warning-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notification-warning-screenshot.png
 [notification-custom-colors-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notification-custom-colors-screenshot.png
 [notifications-locations-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notifications-locations-screenshot.png
+[notification-custom-component-screenshot]: https://github.com/francescodessi/svelte-enhanced-notifications/raw/main/static/notification-custom-component-screenshot.png
+
+
