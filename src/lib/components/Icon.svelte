@@ -29,3 +29,11 @@
         </svg>
     </span>
 {/if}
+
+<style>
+    span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
