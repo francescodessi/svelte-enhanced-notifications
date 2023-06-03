@@ -59,7 +59,7 @@
         </div>
         <div class="close">
             {#if showCloseButton ?? true}
-                <button title="Close" on:click>
+                <button type="button" title="Close" on:click>
                     <Icon name="close" color={primaryColorVariant} />
                 </button>
             {/if}
