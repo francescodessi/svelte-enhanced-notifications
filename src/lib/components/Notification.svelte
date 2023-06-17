@@ -11,6 +11,7 @@
     export let customPrimaryColor = undefined;
     export let customPrimaryColorVariant = undefined;
     export let customFontColor = undefined;
+    export let customWidth = undefined;
 
     export let showCloseButton = true; 
     export let autoDismissible = false;
@@ -40,7 +41,7 @@
     }
 </script>
 
-<div class="notification-container" style="--primary-color:{primaryColor}; --primary-color-variant:{primaryColorVariant}; --font-color:{fontColor};">
+<div class="notification-container" style="--primary-color:{primaryColor}; --primary-color-variant:{primaryColorVariant}; --font-color:{fontColor}; {customWidth != null ? `width: ${customWidth}; max-width: 100%;` : ''}">
     <div class="notification">
         <div>
             <slot name="icon">
@@ -77,6 +78,33 @@
         background-color: var(--primary-color);
         box-shadow: 0 2px 4px 0 var(--primary-color-variant);
         color: var(--font-color);
+        min-width: min-content;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    @media (min-width: 576px) {
+        .notification-container {
+            max-width: 70%;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .notification-container {
+            max-width: 65%;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .notification-container {
+            max-width: 55%;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .notification-container {
+            max-width: 50%;
+        }
     }
 
     .notification {
@@ -98,6 +126,11 @@
     .content {
         font-size: 1.2rem;
         flex-grow: 1;
+    }
+
+    .content div {
+        word-break: break-all;
+        overflow: hidden;
     }
 
     .title {

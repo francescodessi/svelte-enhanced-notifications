@@ -136,6 +136,12 @@ The notification configuration object, the input for `push` method, allows using
 * **`customIconSvg`**: it allows to define a custom icon. The value must be a string that represents a valid SVG.
 * **`customPrimaryColor`**: it allows to modify the background color of the notification. The value must be a string representing a valid CSS color (Hexadecimal, RGB, RGBA, HSL, HSLA, Predefined/Cross-browser color names).
 * **`customPrimaryColorVariant`**: it allows to modify the color of the icons and the countdown timer. The value must be a string representing a valid CSS color (Hexadecimal, RGB, RGBA, HSL, HSLA, Predefined/Cross-browser color names).
+* **`customWidth`**: a string that allows customizing the width of the notification, specifying a numerical value followed by a CSS-supported unit of measurement, such as pixels (px), centimeters (cm), percentage (%), and so on. If no value is specified, then the width of the notification follows the following rules:
+    - when the device width is less than 576 pixels, the notification occupies 100% of the available width.
+    - when the device width is at least 576 pixels, the notification occupies 70% of the available width.
+    - when the device width is at least 768 pixels, the notification occupies 65% of the available width.
+    - when the device width is at least 992 pixels, the notification occupies 55% of the available width.
+    - when the device width is at least 1200 pixels, the notification occupies 50% of the available width.
 * **`message`**: a string that defines the message of the notification.
 * **`showCloseButton`**: a boolean that allows showing the close button of the notification when it's `true` and hiding it when it's `false`. The default value is `true`.
 * **`showCountdown`**: a boolean that, when `true`, allows showing an indication of how long the notification will remain visible. The default value is `false`.
@@ -159,6 +165,12 @@ It provides the following properties:
 * **`customFontColor`**: it allows to modify the font color. The value must be a string representing a valid CSS color (Hexadecimal, RGB, RGBA, HSL, HSLA, Predefined/Cross-browser color names).
 * **`customIconSvg`**: it allows to define a custom icon. The value must be a string that represents a valid SVG.
 * **`customPrimaryColor`**: it allows to modify the background color of the notification. The value must be a string representing a valid CSS color (Hexadecimal, RGB, RGBA, HSL, HSLA, Predefined/Cross-browser color names).
+* **`customWidth`**: a string that allows customizing the width of the notification, specifying a numerical value followed by a CSS-supported unit of measurement, such as pixels (px), centimeters (cm), percentage (%), and so on. If no value is specified, then the width of the notification follows the following rules:
+    - when the device width is less than 576 pixels, the notification occupies 100% of the available width.
+    - when the device width is at least 576 pixels, the notification occupies 70% of the available width.
+    - when the device width is at least 768 pixels, the notification occupies 65% of the available width.
+    - when the device width is at least 992 pixels, the notification occupies 55% of the available width.
+    - when the device width is at least 1200 pixels, the notification occupies 50% of the available width.
 * **`customPrimaryColorVariant`**: it allows to modify the color of the icons and the countdown timer. The value must be a string representing a valid CSS color (Hexadecimal, RGB, RGBA, HSL, HSLA, Predefined/Cross-browser color names).
 * **`message`**: a string that defines the message of the notification.
 * **`showCloseButton`**: a boolean that allows showing the close button of the notification when it's `true` and hiding it when it's `false`. The default value is `true`.
@@ -244,7 +256,7 @@ The dark line at the bottom of the notification is the countdown timer.
 
 
 ### How to modify the colors and icon of the notification
-You can customize the appearance of notifications by leveraging individual properties `customIconSvg`, `customPrimaryColor`, `customPrimaryColorVariant` and `customFontColor` or by defining custom variants.
+You can customize the appearance of notifications by leveraging individual properties `customIconSvg`, `customPrimaryColor`, `customPrimaryColorVariant`,  `customFontColor` and `customWidth` or by defining custom variants.
 ```js
 <script>
     import {NotificationService} from "@dflare/svelte-enhanced-notifications";
@@ -608,10 +620,11 @@ You can also create a component independent of the default `Notification` compon
     export let showCountdown = false;
     export let countdownDuration = 3000;
     export let countdownStart = false;
+    export let customWidth = undefined;
 </script>
 
 <!-- Default Notification component -->
-<Notification on:click title={title} message={message} variant={variant} variants={variants} customIconSvg={customIconSvg} customPrimaryColor={customPrimaryColor} customPrimaryColorVariant={customPrimaryColorVariant} customFontColor={customFontColor} showCloseButton={showCloseButton} autoDismissible={autoDismissible} showCountdown={showCountdown} countdownDuration={countdownDuration} countdownStart={countdownStart}>
+<Notification on:click title={title} message={message} variant={variant} variants={variants} customIconSvg={customIconSvg} customPrimaryColor={customPrimaryColor} customPrimaryColorVariant={customPrimaryColorVariant} customFontColor={customFontColor} showCloseButton={showCloseButton} autoDismissible={autoDismissible} showCountdown={showCountdown} countdownDuration={countdownDuration} countdownStart={countdownStart} customWidth={customWidth}>
     <div slot="icon">
         <CustomIcon/>
     </div>

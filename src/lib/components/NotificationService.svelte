@@ -57,6 +57,7 @@
                 bind:customPrimaryColor={notification.customPrimaryColor}
                 bind:customPrimaryColorVariant={notification.customPrimaryColorVariant}
                 bind:customFontColor={notification.customFontColor}
+                bind:customWidth={notification.customWidth}
                 bind:showCloseButton={notification.showCloseButton}
                 bind:autoDismissible={notification.autoDismissible}
                 bind:showCountdown={notification.showCountdown}
@@ -72,34 +73,10 @@
     .notifications-container {
         width: 100%;
         margin-right: auto;
-        margin-left: auto;        
+        margin-left: auto;
     }
 
     .notifications-container div {
         margin: 0.5rem;
-    }
-
-    @media (min-width: 576px) {
-        .notifications-container {
-            max-width: 70%;
-        }
-    }
-
-    @media (min-width: 768px) {
-        .notifications-container {
-            max-width: 65%;
-        }
-    }
-
-    @media (min-width: 992px) {
-        .notifications-container {
-            max-width: 55%;
-        }
-    }
-
-    @media (min-width: 1200px) {
-        .notifications-container {
-            max-width: 50%;
-        }
     }
 </style>

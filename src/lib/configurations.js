@@ -2,32 +2,32 @@ export const DEFAULT_VARIANTS = {
     error: {
         primaryColor: "#db3057",
         primaryColorVariant: "#50001c",
-        fontColor: "#ffffff",
+        fontColor: "#ffffff"
     },
     warning: {
         primaryColor: "#fc8622",
         primaryColorVariant: "#832f0b",
-        fontColor: "#ffffff",
+        fontColor: "#ffffff"
     },
     success: {
         primaryColor: "#03a66a",
         primaryColorVariant: "#014027",
-        fontColor: "#ffffff",
+        fontColor: "#ffffff"
     },
     info: {
         primaryColor: "#0070e1",
         primaryColorVariant: "#042b52",
-        fontColor: "#ffffff",
+        fontColor: "#ffffff"
     },
     help: {
         primaryColor: "#ba68c8",
         primaryColorVariant: "#410a58",
-        fontColor: "#ffffff",
+        fontColor: "#ffffff"
     },
     default: {
         primaryColor: "#648095",
         primaryColorVariant: "#384b58",
-        fontColor: "#ffffff",
+        fontColor: "#ffffff"
     }
 };
 
