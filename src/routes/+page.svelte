@@ -123,7 +123,7 @@
         </fieldset>
 
         {#if autoDismissible}
-            <div transition:fade>
+            <div transition:fade|global>
                 <fieldset>
                     <label for="showCountdown">
                         <input type="checkbox" id="showCountdown" name="showCountdown" role="switch" bind:checked={showCountdown}/>
@@ -145,7 +145,7 @@
         </fieldset>
 
         {#if customStyle}
-            <div transition:fade>
+            <div transition:fade|global>
                 <div class="grid">
                     <label for="customPrimaryColor">
                         Primary Color

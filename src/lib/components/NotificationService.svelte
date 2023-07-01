@@ -46,7 +46,7 @@
 
 <div class="notifications-container" style:position={position} style:top={top} style:left={left} style:right={right} style:bottom={bottom} style:z-index={zIndex} style:transform={transform}>
     {#each notifications as notification (notification.id)}
-        <div transition:fade="{{duration: 500}}" animate:flip on:introend={handleIntroend(notification.id)}>
+        <div transition:fade|global="{{duration: 500}}" animate:flip on:introend={handleIntroend(notification.id)}>
             <svelte:component 
                 this={notification.component ?? Notification}
                 bind:title={notification.title}
