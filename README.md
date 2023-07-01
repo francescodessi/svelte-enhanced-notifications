@@ -217,7 +217,7 @@ In certain situations, it could be useful to have a function that displays notif
 
 ![notification-success-screenshot]
 
-<p align="right">(<a href="https://svelte.dev/repl/23e6abbae530474a9e09e23392005dbb?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+<p align="right">(<a href="https://svelte.dev/repl/23e6abbae530474a9e09e23392005dbb" target="_blank">Try it on Svelte REPL</a>)</p>
 
 
 ### How to configure an auto-dismissable notification
@@ -252,7 +252,7 @@ In certain situations, it could be useful to have a function that displays notif
 
 The dark line at the bottom of the notification is the countdown timer.
 
-<p align="right">(<a href="https://svelte.dev/repl/86604216e9ea40c4baf31d13659ecced?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+<p align="right">(<a href="https://svelte.dev/repl/86604216e9ea40c4baf31d13659ecced" target="_blank">Try it on Svelte REPL</a>)</p>
 
 
 ### How to modify the colors and icon of the notification
@@ -324,7 +324,7 @@ You can customize the appearance of notifications by leveraging individual prope
 
 ![notification-custom-colors-screenshot]
 
-<p align="right">(<a href="https://svelte.dev/repl/72521d51a438466eb55445975d926902?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+<p align="right">(<a href="https://svelte.dev/repl/72521d51a438466eb55445975d926902" target="_blank">Try it on Svelte REPL</a>)</p>
 
 
 ### How to modify the position of the notifications
@@ -387,7 +387,7 @@ In this example, five NotificationService components are used with different pos
 
 ![notifications-locations-screenshot]
 
-<p align="right">(<a href="https://svelte.dev/repl/9b91a551dbed4bd5b1ba33b491b10039?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+<p align="right">(<a href="https://svelte.dev/repl/9b91a551dbed4bd5b1ba33b491b10039" target="_blank">Try it on Svelte REPL</a>)</p>
 
 
 
@@ -427,7 +427,7 @@ In the following examples, three different `NotificationService` components have
 <NotificationService bind:this={notficationServiceBottom} bind:notifications={notifications} location="bottom"/>
 <button on:click={showNotification}>Show Notification</button>
 ```
-<p align="right">(<a href="https://svelte.dev/repl/ab682b7d97a948d9806af9d32daba521?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+<p align="right">(<a href="https://svelte.dev/repl/ab682b7d97a948d9806af9d32daba521" target="_blank">Try it on Svelte REPL</a>)</p>
 
 
 The following example is identical to the previous one but uses the  `pushNotification` function instead of `push` method of a certain component.
@@ -462,7 +462,7 @@ The following example is identical to the previous one but uses the  `pushNotifi
 <NotificationService bind:this={notficationServiceBottom} bind:notifications={notifications} location="bottom"/>
 <button on:click={showNotification}>Show Notification</button>
 ```
-<p align="right">(<a href="https://svelte.dev/repl/d5a8e4bd4e53449e84fd3d321f5fd1bb?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+<p align="right">(<a href="https://svelte.dev/repl/d5a8e4bd4e53449e84fd3d321f5fd1bb" target="_blank">Try it on Svelte REPL</a>)</p>
 
 The following example is similar to the previous one, but it uses a Svelte `store` as the shared notification container.
 
@@ -508,7 +508,7 @@ export const notifications = writable([]);
 <button on:click={showNotification}>Show Notification</button>
 ```
 
-<p align="right">(<a href="https://svelte.dev/repl/1fe266f67d3a49fdb82724ecb80a1b9c?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+<p align="right">(<a href="https://svelte.dev/repl/1fe266f67d3a49fdb82724ecb80a1b9c" target="_blank">Try it on Svelte REPL</a>)</p>
 
 The following example is identical to the previous one but uses the  `pushNotification` function instead of `push` method of a certain component.
 
@@ -550,7 +550,7 @@ export const notifications = writable([]);
 <button on:click={showNotification}>Show Notification</button>
 ```
 
-<p align="right">(<a href="https://svelte.dev/repl/a88db197062f40868821018261f9056f?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+<p align="right">(<a href="https://svelte.dev/repl/a88db197062f40868821018261f9056f" target="_blank">Try it on Svelte REPL</a>)</p>
 
 
 ### How to create custom notifications
@@ -655,7 +655,7 @@ You can also create a component independent of the default `Notification` compon
 
 ![notification-custom-component-screenshot]
 
-<p align="right">(<a href="https://svelte.dev/repl/1ba18683422c41f2960055ee28c9dd1b?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+<p align="right">(<a href="https://svelte.dev/repl/1ba18683422c41f2960055ee28c9dd1b" target="_blank">Try it on Svelte REPL</a>)</p>
 
 
 
