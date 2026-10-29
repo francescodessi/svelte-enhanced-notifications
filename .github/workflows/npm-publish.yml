@@ -1,8 +1,14 @@
-name: Publish to npm
+name: Stage npm release
 
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Existing release tag to stage (for example v1.1.0)
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -13,7 +19,7 @@ concurrency:
 
 jobs:
   publish-npm:
-    if: github.event.release.prerelease == false
+    if: github.event_name == 'workflow_dispatch' || github.event.release.prerelease == false
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -21,16 +27,20 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: ${{ github.event.release.tag_name }}
+          ref: ${{ github.event.release.tag_name || inputs.release_tag }}
           persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version: '24'
-          registry-url: https://registry.npmjs.org/
           package-manager-cache: false
+      - name: Verify staged publishing is available
+        run: |
+          node --version
+          npm --version
+          npm stage --help
       - name: Verify release tag matches package version
         env:
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_TAG: ${{ github.event.release.tag_name || inputs.release_tag }}
         run: node scripts/check-release.js
       - run: npm ci
       - run: npm run check
@@ -40,8 +50,8 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - run: npm pack --dry-run
-      - name: Publish with provenance
-        run: npm publish --provenance --access public
-        env:
-          # Optional fallback; otherwise configure npm Trusted Publishing (OIDC).
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+      - name: Stage package with provenance using npm Trusted Publishing
+        run: npm stage publish --provenance --access public
+      - name: Explain manual approval
+        run: |
+          echo 'Package submitted to npm staging. Review it in npm > Staged Packages and approve with 2FA before it becomes public.' >> "$GITHUB_STEP_SUMMARY"
