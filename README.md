@@ -237,32 +237,6 @@ not shipped with the library or used to build the public demo. Compatibility sup
 does not remove upstream vulnerabilities in older Svelte runtimes. The current tooling
 also reports the low-severity transitive `deepmerge` advisory GHSA-gcqx-w48m-w2h4.
 
-### Publishing
-
-The Pages workflow now uses Node 24, current GitHub Actions, reproducible installs,
-and automated checks. Pull requests run validation; pushes to main and manual runs
-also deploy. In repository settings, select **Pages → Source → GitHub Actions**.
-The Pages configuration supplies the deployment base path.
-
-The npm workflow validates stable GitHub releases, checks that the release tag matches
-`package.json`, and runs the checks and browser tests before submitting the package to
-npm staging with provenance. It does not publish directly to the public registry.
-For this version, use the tag `v1.1.0` or `1.1.0` after committing both package files.
-Prereleases do not trigger automatic staging. After the workflow succeeds, open
-**Staged Packages** on npm, review the package, and approve it with 2FA to publish it.
-
-For npm authentication, configure a Trusted Publisher for owner
-`francescodessi`, repository `svelte-enhanced-notifications`, and workflow filename
-`npm-publish.yml` (no environment name). Leave **Allow npm publish** unchecked:
-staged publishing is allowed by default. The workflow uses OIDC and does not read
-the old `npm_token` secret. These account settings must be verified separately.
-
-To retry the existing `v1.1.0` release after changing the workflow, commit and push
-the workflow update to `main`, then open **Actions > Stage npm release > Run workflow**.
-Select `main` as the workflow branch and enter `v1.1.0` as `release_tag`. The workflow
-checks out and stages that tag; you do not need to move the tag or recreate the release.
-Re-running the original failed job would still use the old workflow.
-
 The older Svelte REPL links below are retained as historical examples. Their hosted
 package versions may differ from the current release.
 
