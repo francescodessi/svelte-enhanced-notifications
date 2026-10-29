@@ -1,6 +1,9 @@
 .DS_Store
 node_modules
 /build
+/dist
+/playwright-report
+/test-results
 /.svelte-kit
 /package
 .env
@@ -11,3 +14,5 @@ node_modules
 pnpm-lock.yaml
 package-lock.json
 yarn.lock
+
+/.compat

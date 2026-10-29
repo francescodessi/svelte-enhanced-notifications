@@ -1,6 +1,6 @@
 {
 	"name": "@dflare/svelte-enhanced-notifications",
-	"version": "1.0.4",
+	"version": "1.1.0",
 	"description": "A simple component to manage notifications",
 	"keywords": [
 		"notification",
@@ -17,24 +17,30 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/francescodessi/svelte-enhanced-notifications"
+		"url": "git+https://github.com/francescodessi/svelte-enhanced-notifications.git"
 	},
 	"bugs": {
 		"url": "https://github.com/francescodessi/svelte-enhanced-notifications/issues"
 	},
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "vite dev --host 127.0.0.1",
 		"build": "vite build && npm run package",
-		"preview": "vite preview",
-		"package": "svelte-kit sync && svelte-package && publint",
+		"preview": "vite preview --host 127.0.0.1",
+		"prepare": "svelte-kit sync",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
+		"package": "svelte-kit sync && svelte-package && node scripts/package-types.js && publint",
 		"prepublishOnly": "npm run package",
-		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write ."
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write .",
+		"test": "node --test tests/*.test.js",
+		"test:e2e": "npm run build:compat && playwright test",
+		"build:compat": "node scripts/build-compat.js"
 	},
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
-			"svelte": "./dist/index.js"
+			"svelte": "./dist/index.js",
+			"default": "./dist/index.js"
 		}
 	},
 	"files": [
@@ -43,26 +49,42 @@
 		"!dist/**/*.spec.*"
 	],
 	"peerDependencies": {
-		"svelte": "^3.54.0"
+		"svelte": "^3.54.0 || ^4.0.0 || ^5.0.0"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^3.0.0",
-		"@sveltejs/adapter-static": "^3.0.0",
-		"@sveltejs/kit": "^2.0.0",
-		"@sveltejs/package": "^2.0.0",
-		"@sveltejs/vite-plugin-svelte": "^3.0.0",
-		"eslint": "^8.28.0",
-		"eslint-config-prettier": "^8.5.0",
-		"eslint-plugin-svelte": "^2.30.0",
-		"prettier": "^2.8.0",
-		"prettier-plugin-svelte": "^2.10.1",
-		"publint": "^0.1.9",
-		"svelte": "^4.0.0",
-		"tslib": "^2.4.1",
-		"typescript": "^5.0.0",
-		"vite": "^5.0.0"
+		"@eslint/js": "^10.0.1",
+		"@picocss/pico": "^2.1.1",
+		"@playwright/test": "^1.64.1",
+		"@sveltejs/adapter-static": "^4.0.0",
+		"@sveltejs/kit": "^3.1.0",
+		"@sveltejs/package": "^3.0.1",
+		"@sveltejs/vite-plugin-svelte": "^7.3.1",
+		"@types/node": "^24.19.2",
+		"eslint": "^10.13.0",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-svelte": "^3.23.1",
+		"globals": "^17.13.0",
+		"prettier": "^3.9.10",
+		"prettier-plugin-svelte": "^4.1.1",
+		"publint": "^0.3.25",
+		"svelte": "^5.57.3",
+		"svelte-check": "^4.7.7",
+		"typescript": "~6.0.3",
+		"vite": "^8.3.5",
+		"svelte3": "npm:svelte@^3.54.0",
+		"svelte4": "npm:svelte@^4.0.0"
 	},
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
-	"type": "module"
+	"type": "module",
+	"sideEffects": [
+		"**/*.css"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"imports": {
+		"#lib": "./src/lib/index.js",
+		"#lib/*": "./src/lib/*"
+	}
 }

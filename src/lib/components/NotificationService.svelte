@@ -1,82 +1,130 @@
 <script>
-    import { fade } from 'svelte/transition';
-    import { flip } from 'svelte/animate';
+	import { onDestroy } from 'svelte';
+	import { fade } from 'svelte/transition';
+	import { flip } from 'svelte/animate';
 	import Notification from './Notification.svelte';
-    import { DEFAULT_LOCATIONS } from "../configurations.js";
-    
-    export let location = undefined;
-    export let locations = undefined;
-    export let notifications = [];
+	import { DEFAULT_LOCATIONS } from '../configurations.js';
+	import { pushNotification } from '../utilities.js';
 
-    let position = undefined;
-    let top = undefined;
-    let left = undefined;
-    let right = undefined;
-    let bottom = undefined;
-    let zIndex = undefined;
-    let transform = undefined; 
+	/** @type {string | undefined} */
+	export let location = 'top';
+	/** @type {import('../types.js').NotificationServiceProps['locations']} */
+	export let locations = undefined;
+	/** @type {import('../types.js').NotificationOptions[]} */
+	export let notifications = [];
+	/** @type {Record<string, import('../types.js').Location>} */
+	let allLocations;
+	$: allLocations = { ...DEFAULT_LOCATIONS, ...locations };
+	$: placement = Object.prototype.hasOwnProperty.call(allLocations, location ?? 'top')
+		? allLocations[location ?? 'top']
+		: allLocations.top;
+	let countdowns = new Set();
+	// Timer handles are bookkeeping, not reactive UI state.
+	// eslint-disable-next-line svelte/prefer-svelte-reactivity
+	const timers = new Map();
+	let nextId = 0;
 
-    $: {
-        const ALL_LOCATIONS = {...DEFAULT_LOCATIONS, ...locations};
-        ({position, top, left, right, bottom, zIndex, transform} = ALL_LOCATIONS[ALL_LOCATIONS.hasOwnProperty(location) ? location : "top"]);
-    }
+	/** @param {import('../types.js').NotificationOptions} notification */
+	export function push(notification) {
+		while (notifications.some((item) => item.id === nextId)) nextId++;
+		notifications = pushNotification({ ...notification, id: notification.id ?? nextId++ }, [
+			...notifications
+		]);
+		return notifications[notifications.length - 1].id;
+	}
 
-    export function push(notification) {
-        const NOTIFICATION_ID = notifications.length > 0 ? (Number(notifications[notifications.length - 1].id) + 1) : 0;
-        notifications[notifications.length] = {id: NOTIFICATION_ID, ...notification};
-    }
-   
-    function dismiss(notificationId) {
-        const NOTIFICATION_INDEX = notifications.findIndex(notification => notification.id === notificationId);
-        if(NOTIFICATION_INDEX >= 0) {
-            clearTimeout(notifications[NOTIFICATION_INDEX].timeoutId);
-            notifications = notifications.filter(notification => notification.id !== notificationId);
-        }
-    }
+	/** @param {number | string | undefined} id */
+	export function dismiss(id) {
+		if (!notifications.some((item) => item.id === id)) return;
+		clearTimeout(timers.get(id));
+		timers.delete(id);
+		notifications = notifications.filter((item) => item.id !== id);
+	}
 
-    async function handleIntroend(notificationId) {
-        const NOTIFICATION_INDEX = notifications.findIndex(notification => notification.id === notificationId);
-        if(NOTIFICATION_INDEX >= 0 && notifications[NOTIFICATION_INDEX].autoDismissible) {            
-            notifications[NOTIFICATION_INDEX].countdownStart = true;
-            const COUNTDOWN_DURATION = notifications[NOTIFICATION_INDEX].countdownDuration;
-            notifications[NOTIFICATION_INDEX].timeoutId = setTimeout(() => dismiss(notificationId), COUNTDOWN_DURATION);
-        }
-    }
+	/** @param {import('../types.js').NotificationOptions} notification */
+	function componentProps(notification) {
+		const props = { ...notification };
+		delete props.id;
+		delete props.component;
+		return props;
+	}
+	export function clear() {
+		for (const timer of timers.values()) clearTimeout(timer);
+		timers.clear();
+		countdowns = new Set();
+		notifications = [];
+	}
+
+	/** @param {import('../types.js').NotificationOptions} notification */
+	function startCountdown(notification) {
+		if (!notification.autoDismissible || timers.has(notification.id)) return;
+		const duration = notification.countdownDuration ?? 3000;
+		countdowns = new Set([...countdowns, notification.id]);
+		timers.set(
+			notification.id,
+			setTimeout(() => dismiss(notification.id), Math.max(0, duration))
+		);
+	}
+
+	// Release timers even when the parent removes notifications through a bound array.
+	/** @param {import('../types.js').NotificationOptions[]} current */
+	function cleanupTimers(current) {
+		const ids = new Set(current.map((item) => item.id));
+		for (const [id, timer] of timers) {
+			if (!ids.has(id)) {
+				clearTimeout(timer);
+				timers.delete(id);
+			}
+		}
+		countdowns = new Set([...countdowns].filter((id) => ids.has(id)));
+	}
+	$: cleanupTimers(notifications);
+
+	onDestroy(() => {
+		for (const timer of timers.values()) clearTimeout(timer);
+	});
 </script>
 
-<div class="notifications-container" style:position={position} style:top={top} style:left={left} style:right={right} style:bottom={bottom} style:z-index={zIndex} style:transform={transform}>
-    {#each notifications as notification (notification.id)}
-        <div transition:fade|global="{{duration: 500}}" animate:flip on:introend={handleIntroend(notification.id)}>
-            <svelte:component 
-                this={notification.component ?? Notification}
-                bind:title={notification.title}
-                bind:message={notification.message}
-                bind:variant={notification.variant}
-                bind:variants={notification.variants}
-                bind:customIconSvg={notification.customIconSvg}
-                bind:customPrimaryColor={notification.customPrimaryColor}
-                bind:customPrimaryColorVariant={notification.customPrimaryColorVariant}
-                bind:customFontColor={notification.customFontColor}
-                bind:customWidth={notification.customWidth}
-                bind:showCloseButton={notification.showCloseButton}
-                bind:autoDismissible={notification.autoDismissible}
-                bind:showCountdown={notification.showCountdown}
-                bind:countdownDuration={notification.countdownDuration}
-                bind:countdownStart={notification.countdownStart}
-                on:click={dismiss(notification.id)}
-            />
-        </div>
-    {/each}
+<div
+	class="notifications-container"
+	aria-live="polite"
+	aria-relevant="additions"
+	style:position={placement.position}
+	style:top={placement.top}
+	style:left={placement.left}
+	style:right={placement.right}
+	style:bottom={placement.bottom}
+	style:z-index={placement.zIndex}
+	style:transform={placement.transform}
+>
+	{#each notifications as notification (notification.id)}
+		<div
+			class="notification-item"
+			transition:fade|global={{ duration: 200 }}
+			animate:flip={{ duration: 200 }}
+			on:introend={() => startCountdown(notification)}
+		>
+			<svelte:component
+				this={notification.component ?? Notification}
+				{...componentProps(notification)}
+				countdownStart={countdowns.has(notification.id)}
+				onclick={() => dismiss(notification.id)}
+				on:click={() => dismiss(notification.id)}
+			/>
+		</div>
+	{/each}
 </div>
 
 <style>
-    .notifications-container {
-        width: 100%;
-        margin-right: auto;
-        margin-left: auto;
-    }
-
-    .notifications-container div {
-        margin: 0.5rem;
-    }
+	.notifications-container {
+		width: 100%;
+		margin-inline: auto;
+		pointer-events: none;
+	}
+	.notification-item {
+		margin: 0.5rem;
+	}
+	.notification-item > :global(*) {
+		pointer-events: auto;
+	}
 </style>

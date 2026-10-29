@@ -1,62 +1,66 @@
-name: Deploy to GitHub Pages
+name: Validate and deploy GitHub Pages
 
 on:
   push:
-    branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "pages"
+  group: pages-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
   build_site:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v7
         with:
-          node-version: 18
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
           cache: npm
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: build
+      - run: npm ci
+      - run: npm run check
+      - run: npm run lint
+      - run: npm test
+      - name: Configure Pages
+        id: pages
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v6
+      - name: Build demo and package
         env:
-          BASE_PATH: '/svelte-enhanced-notifications'
-        run: |
-          npm run build
-          touch build/.nojekyll
-
-      - name: Upload Artifacts
-        uses: actions/upload-pages-artifact@v1
+          BASE_PATH: ${{ github.event_name == 'pull_request' && format('/{0}', github.event.repository.name) || steps.pages.outputs.base_path }}
+        run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+        env:
+          BASE_PATH: ${{ github.event_name == 'pull_request' && format('/{0}', github.event.repository.name) || steps.pages.outputs.base_path }}
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
         with:
-          # this should match the `pages` option in your adapter-static options
-          path: 'build/'
+          path: build/
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build_site
     runs-on: ubuntu-latest
-
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
     steps:
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v5
